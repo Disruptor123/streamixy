@@ -17,4 +17,33 @@ for the connectwallet:
     components/wallet-provider.tsx
     https://github.com/Disruptor123/streamixy/blob/main/components/wallet-provider.tsx
 
+    export default function RewardsPage() {
+  const { account, connectWallet, seiBalance, strmBalance, sendTransaction, stakeTokens } = useWallet()
+  const [selectedPool, setSelectedPool] = useState<number | null>(null)
+  const [sendAmount, setSendAmount] = useState("")
+  const [sendAddress, setSendAddress] = useState("")
+  const [isTransacting, setIsTransacting] = useState(false)
+  const [stakeAmount, setStakeAmount] = useState("")
+
+  const handleSendSei = async () => {
+    if (!sendAmount || !sendAddress) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await sendTransaction(sendAddress, sendAmount)
+      console.log("Transaction sent:", txHash)
+      alert(`Transaction sent! Hash: ${txHash}`)
+      setSendAmount("")
+      setSendAddress("")
+    } catch (error) {
+      console.error("Send failed:", error)
+      alert("Transaction failed")
+    } finally {
+      setIsTransacting(false)
+    }
+  }
+
+  const handleSendStrm = async () => {
+    if (!sendAmount || !sendAddress) return
+
 smartcontract integration : https://github.com/Disruptor123/streamixy/blob/main/app/rewards/page.tsx
