@@ -4,6 +4,9 @@ Problem Statement Today’s music charts are often shaped by opaque industry neg
 
 Solution Statement Streamixy delivers a trustless, data-driven alternative. Our AI aggregates live music engagement from across social platforms, streaming services, and radio, then anchors the results on-chain for full transparency and immutability. This creates a real-time, global music chart where every rank is verifiable, community-powered, and resistant to manipulation empowering both independent artists and fans to shape music history together.
 
+twitter 
+https://github.com/Disruptor123/streamixy/blob/main/app/api/auth/twitter/callback/route.ts
+
 token contract 
 Stream token contract:
 0x1C94d3A43fF46d17cb652137FC7B247E0881Ce0D
