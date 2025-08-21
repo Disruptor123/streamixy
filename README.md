@@ -16,3 +16,5 @@ how to check the integration and smart contract functionality
 for the connectwallet:
     components/wallet-provider.tsx
     https://github.com/Disruptor123/streamixy/blob/main/components/wallet-provider.tsx
+
+smartcontract integration : https://github.com/Disruptor123/streamixy/blob/main/app/rewards/page.tsx
