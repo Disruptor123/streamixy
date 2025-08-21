@@ -47,6 +47,40 @@ for the connectwallet:
   }
 
   const handleSendStrm = async () => {
+
+  const handleSendStrm = async () => {
+    if (!sendAmount || !sendAddress) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await sendTransaction(sendAddress, sendAmount, "0x1C94d3A43fF46d17cb652137FC7B247E0881Ce0D")
+      console.log("STRM Transaction sent:", txHash)
+      alert(`STRM Transaction sent! Hash: ${txHash}`)
+      setSendAmount("")
+      setSendAddress("")
+    } catch (error) {
+      console.error("STRM Send failed:", error)
+      alert("STRM Transaction failed")
+    } finally {
+      setIsTransacting(false)
+    }
+  }
+
+  const handleStake = async () => {
+    if (!stakeAmount) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await stakeTokens(stakeAmount)
+      console.log("Staking transaction:", txHash)
+      alert(`Staking initiated! Hash: ${txHash}`)
+      setStakeAmount("")
+    } catch (error) {
+      console.error("Staking failed:", error)
+      alert("Staking failed")
+    } finally {
+      setIsTransacting(false)
+    }
     if (!sendAmount || !sendAddress) return
 
 smartcontract integration : https://github.com/Disruptor123/streamixy/blob/main/app/rewards/page.tsx
