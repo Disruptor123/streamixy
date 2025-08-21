@@ -12,3 +12,6 @@ Trade reward address:
 0xDD4170a256dC5B4C5ED32726E0c18FeF50ec6C13
 
 how to check the integration and smart contract functionality
+
+for the connectwallet
+    components/wallet-provider.tsx
