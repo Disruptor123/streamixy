@@ -7,16 +7,14 @@ export async function GET(request: NextRequest) {
     const state = searchParams.get("state")
     const error = searchParams.get("error")
 
+    const callbackUrl = "https://v0.app/chat/decentralized-ai-platform-uQgaRQiGfS4?b=v0-preview-b_04MnIZVA010&f=1"
+
     if (error) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=access_denied`,
-      )
+      return NextResponse.redirect(`${callbackUrl}&error=access_denied`)
     }
 
     if (!code || !state) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=invalid_request`,
-      )
+      return NextResponse.redirect(`${callbackUrl}&error=invalid_request`)
     }
 
     // Verify state parameter
@@ -24,22 +22,23 @@ export async function GET(request: NextRequest) {
     const codeVerifier = request.cookies.get("twitter_code_verifier")?.value
 
     if (!storedState || !codeVerifier || storedState !== state) {
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=invalid_state`,
-      )
+      return NextResponse.redirect(`${callbackUrl}&error=invalid_state`)
     }
+
+    const clientId = "NjIyaU94Yzh3U19BUkhVQm1TcDc6MTpjaQ"
+    const clientSecret = "kNHyGMlwt7-4LmZ0RzWS6389MYefWF-YrwWnwAx8szQh_PWfYv"
 
     // Exchange code for access token
     const tokenResponse = await fetch("https://api.twitter.com/2/oauth2/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: `Basic ${Buffer.from(`${process.env.TWITTER_CLIENT_ID}:${process.env.TWITTER_CLIENT_SECRET}`).toString("base64")}`,
+        Authorization: `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString("base64")}`,
       },
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri: `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/auth/twitter/callback`,
+        redirect_uri: "https://v0.app/chat/decentralized-ai-platform-uQgaRQiGfS4?b=v0-preview-b_04MnIZVA010&f=1",
         code_verifier: codeVerifier,
       }),
     })
@@ -47,9 +46,7 @@ export async function GET(request: NextRequest) {
     if (!tokenResponse.ok) {
       const errorData = await tokenResponse.text()
       console.error("Token exchange failed:", errorData)
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=token_exchange_failed`,
-      )
+      return NextResponse.redirect(`${callbackUrl}&error=token_exchange_failed`)
     }
 
     const tokenData = await tokenResponse.json()
@@ -57,7 +54,7 @@ export async function GET(request: NextRequest) {
 
     // Fetch user profile
     const userResponse = await fetch(
-      "https://api.twitter.com/2/users/me?user.fields=id,name,username,profile_image_url,public_metrics,verified",
+      "https://api.twitter.com/2/users/me?user.fields=id,name,username,description,profile_image_url,public_metrics,verified",
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -67,18 +64,13 @@ export async function GET(request: NextRequest) {
 
     if (!userResponse.ok) {
       console.error("Failed to fetch user profile")
-      return NextResponse.redirect(
-        `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=profile_fetch_failed`,
-      )
+      return NextResponse.redirect(`${callbackUrl}&error=profile_fetch_failed`)
     }
 
     const userData = await userResponse.json()
     const user = userData.data
 
-    // Create response and set user data in cookie
-    const response = NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?twitter_connected=true`,
-    )
+    const response = NextResponse.redirect(`${callbackUrl}&twitter_connected=true`)
 
     // Store Twitter profile data in secure cookie
     response.cookies.set(
@@ -87,6 +79,7 @@ export async function GET(request: NextRequest) {
         id: user.id,
         username: user.username,
         name: user.name,
+        description: user.description,
         profile_image_url: user.profile_image_url,
         public_metrics: user.public_metrics,
         verified: user.verified || false,
@@ -108,7 +101,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Twitter OAuth callback error:", error)
     return NextResponse.redirect(
-      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/profile?error=callback_error`,
+      "https://v0.app/chat/decentralized-ai-platform-uQgaRQiGfS4?b=v0-preview-b_04MnIZVA010&f=1&error=callback_error",
     )
   }
 }

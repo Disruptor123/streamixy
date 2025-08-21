@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { User, Share } from "lucide-react"
+import { User, Share, Wallet } from "lucide-react"
 import { useState, useEffect } from "react"
+import { useWallet } from "@/components/wallet-provider"
 
 // Mock user data
 const userData = {
@@ -131,28 +132,11 @@ const userData = {
 }
 
 export default function ProfilePage() {
+  const { account, connectWallet } = useWallet()
   const [showSocialCard, setShowSocialCard] = useState(false)
   const [twitterConnected, setTwitterConnected] = useState(false)
   const [twitterProfile, setTwitterProfile] = useState(null)
   const [isConnecting, setIsConnecting] = useState(false)
-
-  useEffect(() => {
-    // Check if user has connected Twitter account
-    fetchTwitterProfile()
-
-    // Check for OAuth callback parameters
-    const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get("twitter_connected") === "true") {
-      fetchTwitterProfile()
-      // Clean up URL
-      window.history.replaceState({}, document.title, window.location.pathname)
-    }
-
-    if (urlParams.get("error")) {
-      console.error("Twitter OAuth error:", urlParams.get("error"))
-      setIsConnecting(false)
-    }
-  }, [])
 
   const fetchTwitterProfile = async () => {
     try {
@@ -193,6 +177,49 @@ export default function ProfilePage() {
     }
   }
 
+  useEffect(() => {
+    // Check if user has connected Twitter account
+    fetchTwitterProfile()
+
+    // Check for OAuth callback parameters
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get("twitter_connected") === "true") {
+      fetchTwitterProfile()
+      // Clean up URL
+      window.history.replaceState({}, document.title, window.location.pathname)
+    }
+
+    if (urlParams.get("error")) {
+      console.error("Twitter OAuth error:", urlParams.get("error"))
+      setIsConnecting(false)
+    }
+  }, [])
+
+  if (!account) {
+    return (
+      <div className="min-h-screen bg-black text-white">
+        <Navigation />
+        <div className="pt-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+              <Wallet className="w-24 h-24 text-purple-400 mb-6" />
+              <h1 className="text-4xl font-bold mb-4 text-white">Connect Your Wallet</h1>
+              <p className="text-xl text-gray-300 mb-8 max-w-md">
+                Please connect your Sei Global Wallet to access your profile and account features
+              </p>
+              <Button
+                onClick={connectWallet}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 text-lg"
+              >
+                Connect Wallet
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navigation />
@@ -206,7 +233,7 @@ export default function ProfilePage() {
                 <div className="w-24 h-24 rounded-full overflow-hidden bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center">
                   {twitterProfile?.profile_image_url ? (
                     <img
-                      src={twitterProfile.profile_image_url || "/placeholder.svg"}
+                      src={twitterProfile.profile_image_url.replace("_normal", "_400x400") || "/placeholder.svg"}
                       alt="Profile"
                       className="w-full h-full object-cover"
                     />
@@ -227,19 +254,31 @@ export default function ProfilePage() {
                     {twitterProfile ? `@${twitterProfile.username}` : userData.username}
                   </p>
 
+                  {twitterProfile?.description && (
+                    <p className="text-gray-300 mb-4 max-w-2xl">{twitterProfile.description}</p>
+                  )}
+
                   {/* Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
                     <div className="text-center">
                       <div className="text-2xl font-bold text-blue-400">#{userData.rank}</div>
                       <div className="text-sm text-gray-400">Global Rank</div>
                     </div>
                     {twitterProfile?.public_metrics && (
-                      <div className="text-center">
-                        <div className="text-2xl font-bold text-purple-400">
-                          {twitterProfile.public_metrics.followers_count.toLocaleString()}
+                      <>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-purple-400">
+                            {twitterProfile.public_metrics.followers_count.toLocaleString()}
+                          </div>
+                          <div className="text-sm text-gray-400">Twitter Followers</div>
                         </div>
-                        <div className="text-sm text-gray-400">Twitter Followers</div>
-                      </div>
+                        <div className="text-center">
+                          <div className="text-2xl font-bold text-green-400">
+                            {twitterProfile.public_metrics.following_count.toLocaleString()}
+                          </div>
+                          <div className="text-sm text-gray-400">Following</div>
+                        </div>
+                      </>
                     )}
                   </div>
 
@@ -301,7 +340,7 @@ export default function ProfilePage() {
                     <CardTitle className="text-xl text-white">Total Snap Earned</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-purple-400 mb-2">15,420</div>
+                    <div className="text-3xl font-bold text-purple-400 mb-2">--</div>
                     <p className="text-gray-400">Total snaps received</p>
                   </CardContent>
                 </Card>
@@ -311,7 +350,7 @@ export default function ProfilePage() {
                     <CardTitle className="text-xl text-white">Total Mindshare</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-blue-400 mb-2">87.5%</div>
+                    <div className="text-3xl font-bold text-blue-400 mb-2">--</div>
                     <p className="text-gray-400">Average mindshare score</p>
                   </CardContent>
                 </Card>
@@ -321,7 +360,7 @@ export default function ProfilePage() {
                     <CardTitle className="text-xl text-white">Total $STREAM Earned</CardTitle>
                   </CardHeader>
                   <CardContent className="p-6 text-center">
-                    <div className="text-3xl font-bold text-green-400 mb-2">45,230</div>
+                    <div className="text-3xl font-bold text-green-400 mb-2">--</div>
                     <p className="text-gray-400">$STREAM tokens earned</p>
                   </CardContent>
                 </Card>
@@ -345,7 +384,7 @@ export default function ProfilePage() {
               <div className="w-24 h-24 rounded-full mx-auto mb-4 overflow-hidden bg-gradient-to-r from-purple-400 to-pink-400 flex items-center justify-center">
                 {twitterProfile?.profile_image_url ? (
                   <img
-                    src={twitterProfile.profile_image_url || "/placeholder.svg"}
+                    src={twitterProfile.profile_image_url.replace("_normal", "_400x400") || "/placeholder.svg"}
                     alt="Profile"
                     className="w-full h-full object-cover"
                   />
@@ -353,15 +392,26 @@ export default function ProfilePage() {
                   <span className="text-2xl font-bold text-white">{userData.displayName[0]}</span>
                 )}
               </div>
-              <h2 className="text-2xl font-bold text-white mb-2">{userData.displayName}</h2>
+              <h2 className="text-2xl font-bold text-white mb-2">{twitterProfile?.name || userData.displayName}</h2>
               <p className="text-purple-200 mb-4">
                 {twitterProfile ? `@${twitterProfile.username}` : userData.username}
               </p>
-              <div className="grid grid-cols-1 gap-4 mb-6">
+              {twitterProfile?.description && (
+                <p className="text-purple-100 text-sm mb-4 opacity-90">{twitterProfile.description}</p>
+              )}
+              <div className="grid grid-cols-2 gap-4 mb-6">
                 <div className="text-center">
                   <div className="text-xl font-bold text-white">{userData.stats.remixesCreated}</div>
                   <div className="text-sm text-purple-200">Remixes</div>
                 </div>
+                {twitterProfile?.public_metrics && (
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-white">
+                      {twitterProfile.public_metrics.followers_count.toLocaleString()}
+                    </div>
+                    <div className="text-sm text-purple-200">Followers</div>
+                  </div>
+                )}
               </div>
               <div className="space-y-3">
                 <Button

@@ -3,11 +3,11 @@
 import { Navigation } from "@/components/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Progress } from "@/components/ui/progress"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Coins, Target, Calendar, Music, Vote, Share } from "lucide-react"
+import { Coins, Wallet, ArrowUpDown, Send } from "lucide-react"
 import { useState } from "react"
+import { useWallet } from "@/components/wallet-provider"
+import { Input } from "@/components/ui/input"
 
 // Mock rewards data
 const rewardsData = {
@@ -24,7 +24,7 @@ const rewardsData = {
       progress: 0,
       total: 1,
       completed: false,
-      icon: <Music className="w-5 h-5" />,
+      icon: <Wallet className="w-5 h-5" />,
     },
     {
       id: 2,
@@ -34,7 +34,7 @@ const rewardsData = {
       progress: 3,
       total: 5,
       completed: false,
-      icon: <Vote className="w-5 h-5" />,
+      icon: <Wallet className="w-5 h-5" />,
     },
     {
       id: 3,
@@ -44,7 +44,7 @@ const rewardsData = {
       progress: 1,
       total: 1,
       completed: true,
-      icon: <Share className="w-5 h-5" />,
+      icon: <Wallet className="w-5 h-5" />,
     },
   ],
   stakingPools: [
@@ -62,14 +62,89 @@ const rewardsData = {
 }
 
 export default function RewardsPage() {
+  const { account, connectWallet, seiBalance, strmBalance, sendTransaction, stakeTokens } = useWallet()
   const [selectedPool, setSelectedPool] = useState<number | null>(null)
+  const [sendAmount, setSendAmount] = useState("")
+  const [sendAddress, setSendAddress] = useState("")
+  const [isTransacting, setIsTransacting] = useState(false)
+  const [stakeAmount, setStakeAmount] = useState("")
 
-  const claimRewards = (taskId: number) => {
-    console.log(`Claiming rewards for task ${taskId}`)
+  const handleSendSei = async () => {
+    if (!sendAmount || !sendAddress) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await sendTransaction(sendAddress, sendAmount)
+      console.log("Transaction sent:", txHash)
+      alert(`Transaction sent! Hash: ${txHash}`)
+      setSendAmount("")
+      setSendAddress("")
+    } catch (error) {
+      console.error("Send failed:", error)
+      alert("Transaction failed")
+    } finally {
+      setIsTransacting(false)
+    }
   }
 
-  const stakeTokens = (poolId: number) => {
-    console.log(`Staking tokens in pool ${poolId}`)
+  const handleSendStrm = async () => {
+    if (!sendAmount || !sendAddress) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await sendTransaction(sendAddress, sendAmount, "0x1C94d3A43fF46d17cb652137FC7B247E0881Ce0D")
+      console.log("STRM Transaction sent:", txHash)
+      alert(`STRM Transaction sent! Hash: ${txHash}`)
+      setSendAmount("")
+      setSendAddress("")
+    } catch (error) {
+      console.error("STRM Send failed:", error)
+      alert("STRM Transaction failed")
+    } finally {
+      setIsTransacting(false)
+    }
+  }
+
+  const handleStake = async () => {
+    if (!stakeAmount) return
+
+    setIsTransacting(true)
+    try {
+      const txHash = await stakeTokens(stakeAmount)
+      console.log("Staking transaction:", txHash)
+      alert(`Staking initiated! Hash: ${txHash}`)
+      setStakeAmount("")
+    } catch (error) {
+      console.error("Staking failed:", error)
+      alert("Staking failed")
+    } finally {
+      setIsTransacting(false)
+    }
+  }
+
+  if (!account) {
+    return (
+      <div className="min-h-screen bg-black text-white">
+        <Navigation />
+        <div className="pt-20 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+              <Wallet className="w-24 h-24 text-purple-400 mb-6" />
+              <h1 className="text-4xl font-bold mb-4 text-white">Connect Your Wallet</h1>
+              <p className="text-xl text-gray-300 mb-8 max-w-md">
+                Please connect your Sei Global Wallet to access rewards and earning features
+              </p>
+              <Button
+                onClick={connectWallet}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-3 text-lg"
+              >
+                Connect Wallet
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -88,92 +163,92 @@ export default function RewardsPage() {
 
           {/* Balance Overview */}
           <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <Card className="bg-gradient-to-br from-yellow-500/20 to-orange-500/20 border-yellow-500/30">
+            <Card className="bg-black border-yellow-500/30">
               <CardContent className="p-6 text-center">
                 <Coins className="w-8 h-8 text-yellow-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">{rewardsData.balance.strm.toLocaleString()}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {Number.parseFloat(strmBalance).toLocaleString()}
+                </div>
                 <div className="text-yellow-400">STRM Balance</div>
               </CardContent>
             </Card>
-            <Card className="bg-gradient-to-br from-purple-500/20 to-pink-500/20 border-purple-500/30">
+            <Card className="bg-black border-blue-500/30">
               <CardContent className="p-6 text-center">
-                <Target className="w-8 h-8 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">{rewardsData.balance.staked.toLocaleString()}</div>
-                <div className="text-purple-400">Staked</div>
+                <Wallet className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+                <div className="text-2xl font-bold text-white mb-1">{Number.parseFloat(seiBalance).toFixed(4)}</div>
+                <div className="text-blue-400">SEI Balance</div>
               </CardContent>
             </Card>
           </div>
 
-          <Tabs defaultValue="tasks" className="space-y-6">
+          <Card className="bg-gray-900/50 border-gray-700 mb-8">
+            <CardHeader>
+              <CardTitle className="text-2xl text-white flex items-center gap-2">
+                <ArrowUpDown className="w-6 h-6" />
+                Send & Receive
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">Send Tokens</h3>
+                  <Input
+                    placeholder="Recipient Address"
+                    value={sendAddress}
+                    onChange={(e) => setSendAddress(e.target.value)}
+                    className="bg-gray-800 border-gray-600 text-white"
+                  />
+                  <Input
+                    placeholder="Amount"
+                    type="number"
+                    value={sendAmount}
+                    onChange={(e) => setSendAmount(e.target.value)}
+                    className="bg-gray-800 border-gray-600 text-white"
+                  />
+                  <div className="flex gap-2">
+                    <Button
+                      onClick={handleSendSei}
+                      disabled={isTransacting || !sendAmount || !sendAddress}
+                      className="flex-1 bg-blue-500 hover:bg-blue-600"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Send SEI
+                    </Button>
+                    <Button
+                      onClick={handleSendStrm}
+                      disabled={isTransacting || !sendAmount || !sendAddress}
+                      className="flex-1 bg-yellow-500 hover:bg-yellow-600"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Send STRM
+                    </Button>
+                  </div>
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-white">Receive</h3>
+                  <div className="bg-gray-800 p-4 rounded-lg">
+                    <p className="text-sm text-gray-400 mb-2">Your Wallet Address:</p>
+                    <p className="text-white font-mono text-sm break-all">{account}</p>
+                    <Button
+                      onClick={() => navigator.clipboard.writeText(account || "")}
+                      className="mt-2 bg-gray-700 hover:bg-gray-600"
+                      size="sm"
+                    >
+                      Copy Address
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Tabs defaultValue="staking" className="space-y-6">
             <TabsList className="bg-gray-900/50 border border-gray-700">
-              <TabsTrigger value="tasks" className="data-[state=active]:bg-purple-500 text-white">
-                <Target className="w-4 h-4 mr-2" />
-                Tasks
-              </TabsTrigger>
               <TabsTrigger value="staking" className="data-[state=active]:bg-purple-500 text-white">
                 <Coins className="w-4 h-4 mr-2" />
                 Staking
               </TabsTrigger>
             </TabsList>
-
-            {/* Tasks Tab */}
-            <TabsContent value="tasks" className="space-y-6">
-              <div className="grid lg:grid-cols-1 gap-6">
-                {/* Daily Tasks */}
-                <Card className="bg-gray-900/50 border-gray-700">
-                  <CardHeader>
-                    <CardTitle className="text-xl text-white flex items-center">
-                      <Calendar className="w-5 h-5 mr-2 text-blue-400" />
-                      Daily Tasks
-                      <Badge className="ml-2 bg-blue-500/20 text-blue-400">Resets in 8h</Badge>
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    {rewardsData.dailyTasks.map((task) => (
-                      <div
-                        key={task.id}
-                        className={`p-4 rounded-lg border transition-all duration-300 ${
-                          task.completed
-                            ? "bg-green-500/10 border-green-500/30"
-                            : "bg-gray-800/30 border-gray-600 hover:bg-gray-800/50"
-                        }`}
-                      >
-                        <div className="flex items-start justify-between mb-3">
-                          <div className="flex items-center space-x-3">
-                            <div className="text-purple-400">{task.icon}</div>
-                            <div>
-                              <h3 className="font-semibold text-white">{task.title}</h3>
-                              <p className="text-sm text-gray-400">{task.description}</p>
-                            </div>
-                          </div>
-                          <div className="text-right">
-                            <div className="text-sm font-semibold text-yellow-400">+{task.reward} STRM</div>
-                          </div>
-                        </div>
-                        {task.completed ? (
-                          <div className="flex items-center justify-between">
-                            <Badge className="bg-green-500/20 text-green-400">Completed</Badge>
-                            <Button size="sm" className="bg-green-500 hover:bg-green-600">
-                              Claim
-                            </Button>
-                          </div>
-                        ) : (
-                          <div>
-                            <div className="flex items-center justify-between text-xs text-gray-400 mb-2">
-                              <span>Progress</span>
-                              <span>
-                                {task.progress} / {task.total}
-                              </span>
-                            </div>
-                            <Progress value={(task.progress / task.total) * 100} className="h-2" />
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              </div>
-            </TabsContent>
 
             {/* Staking Tab */}
             <TabsContent value="staking" className="space-y-6">
@@ -200,23 +275,25 @@ export default function RewardsPage() {
                             <span className="text-white">2.4M STRM</span>
                           </div>
                           <div className="flex justify-between">
-                            <span className="text-gray-400">Your Stake</span>
-                            <span className="text-white">12,000 STRM</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Pending Rewards</span>
-                            <span className="text-yellow-400">156.8 STRM</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-400">Lock Period</span>
-                            <span className="text-white">30 days</span>
+                            <span className="text-gray-400">Your Balance</span>
+                            <span className="text-white">{Number.parseFloat(strmBalance).toFixed(2)} STRM</span>
                           </div>
                         </div>
 
-                        <div className="space-y-2">
-                          <Button className="w-full bg-green-500 hover:bg-green-600">Claim Rewards (156.8 STRM)</Button>
-                          <Button variant="outline" className="w-full border-gray-600 text-white bg-transparent">
-                            Add More
+                        <div className="space-y-4">
+                          <Input
+                            placeholder="Amount to stake"
+                            type="number"
+                            value={stakeAmount}
+                            onChange={(e) => setStakeAmount(e.target.value)}
+                            className="bg-gray-700 border-gray-600 text-white"
+                          />
+                          <Button
+                            onClick={handleStake}
+                            disabled={isTransacting || !stakeAmount}
+                            className="w-full bg-purple-500 hover:bg-purple-600"
+                          >
+                            {isTransacting ? "Processing..." : "Stake STRM Tokens"}
                           </Button>
                         </div>
                       </CardContent>

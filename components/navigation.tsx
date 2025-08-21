@@ -3,25 +3,15 @@
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Wallet, User, Trophy, Music, BarChart3, ChevronDown } from "lucide-react"
-import { useState } from "react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
+import { useWallet } from "./wallet-provider"
 
 export function Navigation() {
-  const [isConnected, setIsConnected] = useState(false)
-  const [walletAddress, setWalletAddress] = useState("")
+  const { account, isActive, isConnecting, connect, disconnect } = useWallet()
 
-  const connectWallet = async () => {
-    // Mock wallet connection
-    if (!isConnected) {
-      // Simulate wallet connection
-      setWalletAddress("0x1234...5678")
-      setIsConnected(true)
-    }
-  }
-
-  const disconnectWallet = () => {
-    setIsConnected(false)
-    setWalletAddress("")
+  const formatAddress = (address: string) => {
+    if (!address) return ""
+    return `${address.slice(0, 6)}...${address.slice(-4)}`
   }
 
   return (
@@ -69,17 +59,21 @@ export function Navigation() {
           </div>
 
           {/* Connect Wallet Button */}
-          {!isConnected ? (
-            <Button className="bg-white hover:bg-gray-100 text-black border-0" onClick={connectWallet}>
+          {!isActive ? (
+            <Button
+              className="bg-white hover:bg-gray-100 text-black border-0"
+              onClick={connect}
+              disabled={isConnecting}
+            >
               <Wallet className="w-4 h-4 mr-2" />
-              Connect Wallet
+              {isConnecting ? "Connecting..." : "Connect Sei Wallet"}
             </Button>
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="bg-white hover:bg-gray-100 text-black border-0">
                   <Wallet className="w-4 h-4 mr-2" />
-                  {walletAddress}
+                  {formatAddress(account || "")}
                   <ChevronDown className="w-4 h-4 ml-2" />
                 </Button>
               </DropdownMenuTrigger>
@@ -96,7 +90,7 @@ export function Navigation() {
                     Rewards
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="text-white hover:bg-gray-800" onClick={disconnectWallet}>
+                <DropdownMenuItem className="text-white hover:bg-gray-800" onClick={disconnect}>
                   <Wallet className="w-4 h-4 mr-2" />
                   Disconnect
                 </DropdownMenuItem>

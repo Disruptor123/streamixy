@@ -69,7 +69,6 @@ const snapCampaigns = [
   },
 ]
 
-// Mock data for good and bad sentiment music (20 songs each)
 const goodSentimentMusic = [
   {
     id: 1,
@@ -83,7 +82,7 @@ const goodSentimentMusic = [
     id: 2,
     title: "Anti-Hero",
     artist: "Taylor Swift",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 91,
     change24h: "+8.3%",
   },
@@ -99,7 +98,7 @@ const goodSentimentMusic = [
     id: 4,
     title: "As It Was",
     artist: "Harry Styles",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 87,
     change24h: "+6.7%",
   },
@@ -107,11 +106,18 @@ const goodSentimentMusic = [
     id: 5,
     title: "Heat Waves",
     artist: "Glass Animals",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 85,
     change24h: "+9.1%",
   },
-  { id: 6, title: "Stay", artist: "The Kid LAROI", albumArt: "/placeholder.svg", mindshare: 83, change24h: "+4.8%" },
+  {
+    id: 6,
+    title: "Stay",
+    artist: "The Kid LAROI",
+    albumArt: "/generic-woman-floral-album.png",
+    mindshare: 83,
+    change24h: "+4.8%",
+  },
   {
     id: 7,
     title: "Good 4 U",
@@ -120,12 +126,19 @@ const goodSentimentMusic = [
     mindshare: 82,
     change24h: "+7.2%",
   },
-  { id: 8, title: "Levitating", artist: "Dua Lipa", albumArt: "/placeholder.svg", mindshare: 80, change24h: "+5.9%" },
+  {
+    id: 8,
+    title: "Levitating",
+    artist: "Dua Lipa",
+    albumArt: "/unholy-album-cover.png",
+    mindshare: 80,
+    change24h: "+5.9%",
+  },
   {
     id: 9,
     title: "Blinding Lights",
     artist: "The Weeknd",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 79,
     change24h: "+3.4%",
   },
@@ -133,7 +146,7 @@ const goodSentimentMusic = [
     id: 10,
     title: "Watermelon Sugar",
     artist: "Harry Styles",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 77,
     change24h: "+6.1%",
   },
@@ -141,7 +154,7 @@ const goodSentimentMusic = [
     id: 11,
     title: "Peaches",
     artist: "Justin Bieber",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 76,
     change24h: "+4.3%",
   },
@@ -157,7 +170,7 @@ const goodSentimentMusic = [
     id: 13,
     title: "Positions",
     artist: "Ariana Grande",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 74,
     change24h: "+2.9%",
   },
@@ -169,22 +182,36 @@ const goodSentimentMusic = [
     mindshare: 73,
     change24h: "+5.6%",
   },
-  { id: 15, title: "Mood", artist: "24kGoldn", albumArt: "/placeholder.svg", mindshare: 72, change24h: "+7.8%" },
+  { id: 15, title: "Mood", artist: "24kGoldn", albumArt: "/artist-photo.png", mindshare: 72, change24h: "+7.8%" },
   {
     id: 16,
     title: "Savage",
     artist: "Megan Thee Stallion",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 71,
     change24h: "+3.2%",
   },
-  { id: 17, title: "Rockstar", artist: "DaBaby", albumArt: "/placeholder.svg", mindshare: 70, change24h: "+4.5%" },
-  { id: 18, title: "Circles", artist: "Post Malone", albumArt: "/placeholder.svg", mindshare: 69, change24h: "+6.3%" },
+  {
+    id: 17,
+    title: "Rockstar",
+    artist: "DaBaby",
+    albumArt: "/generic-woman-floral-album.png",
+    mindshare: 70,
+    change24h: "+4.5%",
+  },
+  {
+    id: 18,
+    title: "Circles",
+    artist: "Post Malone",
+    albumArt: "/unholy-album-cover.png",
+    mindshare: 69,
+    change24h: "+6.3%",
+  },
   {
     id: 19,
     title: "Don't Start Now",
     artist: "Dua Lipa",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 68,
     change24h: "+2.7%",
   },
@@ -192,7 +219,7 @@ const goodSentimentMusic = [
     id: 20,
     title: "Adore You",
     artist: "Harry Styles",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 67,
     change24h: "+5.1%",
   },
@@ -203,16 +230,23 @@ const badSentimentMusic = [
     id: 1,
     title: "Industry Baby",
     artist: "Lil Nas X",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 45,
     change24h: "-8.3%",
   },
-  { id: 2, title: "Bad Habit", artist: "Steve Lacy", albumArt: "/placeholder.svg", mindshare: 43, change24h: "-12.1%" },
+  {
+    id: 2,
+    title: "Bad Habit",
+    artist: "Steve Lacy",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
+    mindshare: 43,
+    change24h: "-12.1%",
+  },
   {
     id: 3,
     title: "Running Up",
     artist: "Nicki Minaj",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 41,
     change24h: "-6.7%",
   },
@@ -220,16 +254,23 @@ const badSentimentMusic = [
     id: 4,
     title: "First Class",
     artist: "Jack Harlow",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 39,
     change24h: "-9.4%",
   },
-  { id: 5, title: "Wait For U", artist: "Future", albumArt: "/placeholder.svg", mindshare: 37, change24h: "-5.8%" },
+  {
+    id: 5,
+    title: "Wait For U",
+    artist: "Future",
+    albumArt: "/vampire-album-cover.png",
+    mindshare: 37,
+    change24h: "-5.8%",
+  },
   {
     id: 6,
     title: "Break My Soul",
     artist: "Beyoncé",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 35,
     change24h: "-11.2%",
   },
@@ -237,7 +278,7 @@ const badSentimentMusic = [
     id: 7,
     title: "Me Porto Bonito",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 34,
     change24h: "-7.9%",
   },
@@ -245,27 +286,55 @@ const badSentimentMusic = [
     id: 8,
     title: "Tití Me Preguntó",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 32,
     change24h: "-4.6%",
   },
-  { id: 9, title: "Moscow Mule", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 31, change24h: "-8.7%" },
-  { id: 10, title: "Efecto", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 29, change24h: "-6.3%" },
+  {
+    id: 9,
+    title: "Moscow Mule",
+    artist: "Bad Bunny",
+    albumArt: "/unholy-album-cover.png",
+    mindshare: 31,
+    change24h: "-8.7%",
+  },
+  {
+    id: 10,
+    title: "Efecto",
+    artist: "Bad Bunny",
+    albumArt: "/vampire-album-cover.png",
+    mindshare: 29,
+    change24h: "-6.3%",
+  },
   {
     id: 11,
     title: "Ojitos Lindos",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 28,
     change24h: "-9.1%",
   },
-  { id: 12, title: "Tarot", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 27, change24h: "-5.4%" },
-  { id: 13, title: "Neverita", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 26, change24h: "-7.8%" },
+  {
+    id: 12,
+    title: "Tarot",
+    artist: "Bad Bunny",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
+    mindshare: 27,
+    change24h: "-5.4%",
+  },
+  {
+    id: 13,
+    title: "Neverita",
+    artist: "Bad Bunny",
+    albumArt: "/generic-woman-floral-album.png",
+    mindshare: 26,
+    change24h: "-7.8%",
+  },
   {
     id: 14,
     title: "La Corriente",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 25,
     change24h: "-4.2%",
   },
@@ -273,22 +342,50 @@ const badSentimentMusic = [
     id: 15,
     title: "Después de la Playa",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 24,
     change24h: "-8.9%",
   },
-  { id: 16, title: "Dos Mil 16", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 23, change24h: "-6.7%" },
-  { id: 17, title: "El Apagón", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 22, change24h: "-5.3%" },
+  {
+    id: 16,
+    title: "Dos Mil 16",
+    artist: "Bad Bunny",
+    albumArt: "/artist-photo.png",
+    mindshare: 23,
+    change24h: "-6.7%",
+  },
+  {
+    id: 17,
+    title: "El Apagón",
+    artist: "Bad Bunny",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
+    mindshare: 22,
+    change24h: "-5.3%",
+  },
   {
     id: 18,
     title: "Yo No Soy Celoso",
     artist: "Bad Bunny",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 21,
     change24h: "-7.6%",
   },
-  { id: 19, title: "Un Ratito", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 20, change24h: "-4.8%" },
-  { id: 20, title: "Andrea", artist: "Bad Bunny", albumArt: "/placeholder.svg", mindshare: 19, change24h: "-9.2%" },
+  {
+    id: 19,
+    title: "Un Ratito",
+    artist: "Bad Bunny",
+    albumArt: "/unholy-album-cover.png",
+    mindshare: 20,
+    change24h: "-4.8%",
+  },
+  {
+    id: 20,
+    title: "Andrea",
+    artist: "Bad Bunny",
+    albumArt: "/vampire-album-cover.png",
+    mindshare: 19,
+    change24h: "-9.2%",
+  },
 ]
 
 // Comprehensive top 20 music data with all required fields
@@ -349,7 +446,7 @@ const top20MusicData = [
     id: 5,
     title: "Anti-Hero (Drill)",
     artist: "Taylor Swift",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 85,
     change24h: "-1.8%",
     change7d: "+9.6%",
@@ -362,7 +459,7 @@ const top20MusicData = [
     id: 6,
     title: "As It Was (Phonk)",
     artist: "Harry Styles",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 83,
     change24h: "+7.2%",
     change7d: "+14.3%",
@@ -375,7 +472,7 @@ const top20MusicData = [
     id: 7,
     title: "Bad Habit (Amapiano)",
     artist: "Steve Lacy",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 81,
     change24h: "-2.5%",
     change7d: "+6.8%",
@@ -388,7 +485,7 @@ const top20MusicData = [
     id: 8,
     title: "Heat Waves (Drill)",
     artist: "Glass Animals",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 79,
     change24h: "+4.1%",
     change7d: "+11.7%",
@@ -401,7 +498,7 @@ const top20MusicData = [
     id: 9,
     title: "Stay (Hyperpop)",
     artist: "The Kid LAROI",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 77,
     change24h: "+6.3%",
     change7d: "+8.9%",
@@ -414,7 +511,7 @@ const top20MusicData = [
     id: 10,
     title: "Industry Baby (Phonk)",
     artist: "Lil Nas X",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 75,
     change24h: "-4.7%",
     change7d: "+3.2%",
@@ -427,7 +524,7 @@ const top20MusicData = [
     id: 11,
     title: "Good 4 U (Drill Remix)",
     artist: "Olivia Rodrigo",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 73,
     change24h: "+2.8%",
     change7d: "+7.5%",
@@ -440,7 +537,7 @@ const top20MusicData = [
     id: 12,
     title: "Levitating (Amapiano)",
     artist: "Dua Lipa",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 71,
     change24h: "-1.2%",
     change7d: "+5.4%",
@@ -453,7 +550,7 @@ const top20MusicData = [
     id: 13,
     title: "Blinding Lights (Phonk)",
     artist: "The Weeknd",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 69,
     change24h: "+3.6%",
     change7d: "+9.1%",
@@ -466,7 +563,7 @@ const top20MusicData = [
     id: 14,
     title: "Watermelon Sugar (Hyperpop)",
     artist: "Harry Styles",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 67,
     change24h: "+1.9%",
     change7d: "+4.7%",
@@ -479,7 +576,7 @@ const top20MusicData = [
     id: 15,
     title: "Peaches (Drill Remix)",
     artist: "Justin Bieber",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 65,
     change24h: "-3.8%",
     change7d: "+2.1%",
@@ -492,7 +589,7 @@ const top20MusicData = [
     id: 16,
     title: "Positions (Amapiano)",
     artist: "Ariana Grande",
-    albumArt: "/placeholder.svg",
+    albumArt: "/vampire-album-cover.png",
     mindshare: 63,
     change24h: "+5.2%",
     change7d: "+8.3%",
@@ -505,7 +602,7 @@ const top20MusicData = [
     id: 17,
     title: "Circles (Phonk Remix)",
     artist: "Post Malone",
-    albumArt: "/placeholder.svg",
+    albumArt: "/doja-cat-paint-the-town-red-inspired.png",
     mindshare: 61,
     change24h: "-2.1%",
     change7d: "+1.8%",
@@ -518,7 +615,7 @@ const top20MusicData = [
     id: 18,
     title: "Savage (Hyperpop)",
     artist: "Megan Thee Stallion",
-    albumArt: "/placeholder.svg",
+    albumArt: "/generic-woman-floral-album.png",
     mindshare: 59,
     change24h: "+4.5%",
     change7d: "+6.9%",
@@ -531,7 +628,7 @@ const top20MusicData = [
     id: 19,
     title: "Rockstar (Drill Remix)",
     artist: "DaBaby",
-    albumArt: "/placeholder.svg",
+    albumArt: "/unholy-album-cover.png",
     mindshare: 57,
     change24h: "-1.7%",
     change7d: "+3.4%",
@@ -544,7 +641,7 @@ const top20MusicData = [
     id: 20,
     title: "Mood (Amapiano)",
     artist: "24kGoldn",
-    albumArt: "/placeholder.svg",
+    albumArt: "/artist-photo.png",
     mindshare: 55,
     change24h: "+2.3%",
     change7d: "+5.1%",
@@ -640,7 +737,7 @@ const trendingArtists = [
   {
     id: 1,
     name: "Olivia Rodrigo",
-    image: "/artist-photo.png",
+    image: "/vampire-album-cover.png",
     followers: "2.1M",
     monthlyListeners: "45.2M",
     topSong: "Vampire (Drill Remix)",
@@ -676,7 +773,7 @@ const trendingArtists = [
   {
     id: 5,
     name: "Bad Bunny",
-    image: "/placeholder-77g1x.png",
+    image: "/artist-photo.png",
     followers: "4.2M",
     monthlyListeners: "78.9M",
     topSong: "Tití Me Preguntó",
@@ -685,7 +782,7 @@ const trendingArtists = [
   {
     id: 6,
     name: "Taylor Swift",
-    image: "/placeholder-77g1x.png",
+    image: "/vampire-album-cover.png",
     followers: "5.1M",
     monthlyListeners: "89.4M",
     topSong: "Anti-Hero",
@@ -694,7 +791,7 @@ const trendingArtists = [
   {
     id: 7,
     name: "The Weeknd",
-    image: "/placeholder-77g1x.png",
+    image: "/doja-cat-paint-the-town-red-inspired.png",
     followers: "3.3M",
     monthlyListeners: "61.2M",
     topSong: "Blinding Lights",
@@ -703,7 +800,7 @@ const trendingArtists = [
   {
     id: 8,
     name: "Ariana Grande",
-    image: "/placeholder-77g1x.png",
+    image: "/generic-woman-floral-album.png",
     followers: "2.8M",
     monthlyListeners: "55.6M",
     topSong: "Positions",
@@ -712,7 +809,7 @@ const trendingArtists = [
   {
     id: 9,
     name: "Drake",
-    image: "/placeholder-77g1x.png",
+    image: "/unholy-album-cover.png",
     followers: "4.7M",
     monthlyListeners: "82.3M",
     topSong: "God's Plan",
@@ -721,7 +818,7 @@ const trendingArtists = [
   {
     id: 10,
     name: "Billie Eilish",
-    image: "/placeholder-77g1x.png",
+    image: "/artist-photo.png",
     followers: "2.2M",
     monthlyListeners: "47.8M",
     topSong: "bad guy",
@@ -918,11 +1015,11 @@ export default function HomePage() {
                     onClick={() => handleMusicClick(song.id.toString())}
                   >
                     <Image
-                      src={song.albumArt || "/placeholder.svg"}
+                      src={song.albumArt || "/vampire-album-cover.png"}
                       alt={song.title}
                       width={32}
                       height={32}
-                      className="rounded"
+                      className="rounded object-cover"
                     />
                     <div className="flex-1">
                       <p className="text-white text-sm">{song.title}</p>
@@ -932,6 +1029,17 @@ export default function HomePage() {
                       <p className="text-green-400 text-sm">{song.mindshare}%</p>
                       <p className="text-green-300 text-xs">{song.change24h}</p>
                     </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-green-400 hover:text-green-300 p-1"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handlePlay(song)
+                      }}
+                    >
+                      <Play className="w-3 h-3" />
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -951,11 +1059,11 @@ export default function HomePage() {
                     onClick={() => handleMusicClick(song.id.toString())}
                   >
                     <Image
-                      src={song.albumArt || "/placeholder.svg"}
+                      src={song.albumArt || "/vampire-album-cover.png"}
                       alt={song.title}
                       width={32}
                       height={32}
-                      className="rounded"
+                      className="rounded object-cover"
                     />
                     <div className="flex-1">
                       <p className="text-white text-sm">{song.title}</p>
@@ -965,6 +1073,17 @@ export default function HomePage() {
                       <p className="text-red-400 text-sm">{song.mindshare}%</p>
                       <p className="text-red-300 text-xs">-{song.change24h.replace("+", "")}</p>
                     </div>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-red-400 hover:text-red-300 p-1"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handlePlay(song)
+                      }}
+                    >
+                      <Play className="w-3 h-3" />
+                    </Button>
                   </div>
                 ))}
               </div>
@@ -1060,7 +1179,7 @@ export default function HomePage() {
             </div>
           </Card>
 
-          <Card className="bg-gray-900/50 border-gray-800 p-6 mb-16">
+          <Card className="bg-black border-gray-800 p-6 mb-16">
             <h2 className="text-2xl mb-6 text-center bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
               Top 10 Trending Artists
             </h2>
@@ -1069,14 +1188,14 @@ export default function HomePage() {
               {trendingArtists.map((artist, index) => (
                 <Card
                   key={artist.id}
-                  className="bg-gray-800/50 border-gray-700 p-4 hover:bg-gray-700/50 transition-all duration-300 transform hover:scale-105"
+                  className="bg-black border-gray-700 p-4 hover:bg-gray-800/50 transition-all duration-300 transform hover:scale-105"
                   style={{
                     animation: `slideInUp 0.5s ease-out ${index * 0.1}s both`,
                   }}
                 >
                   <div className="text-center">
                     <Image
-                      src={artist.image || "/placeholder.svg"}
+                      src={artist.image || "/vampire-album-cover.png"}
                       alt={artist.name}
                       width={80}
                       height={80}
