@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const state = searchParams.get("state")
     const error = searchParams.get("error")
 
-    const callbackUrl = "https://v0.app/chat/decentralized-ai-platform-uQgaRQiGfS4?b=v0-preview-b_04MnIZVA010&f=1"
+    const callbackUrl = "https://streamixy.vercel.app/"
 
     if (error) {
       return NextResponse.redirect(`${callbackUrl}&error=access_denied`)
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
       body: new URLSearchParams({
         grant_type: "authorization_code",
         code,
-        redirect_uri: "https://v0.app/chat/decentralized-ai-platform-uQgaRQiGfS4?b=v0-preview-b_04MnIZVA010&f=1",
+        redirect_uri: "https://streamixy.vercel.app/",
         code_verifier: codeVerifier,
       }),
     })
