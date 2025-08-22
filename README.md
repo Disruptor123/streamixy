@@ -951,11 +951,7 @@ export async function GET(request: NextRequest) {
 
 
 
-
-
-
-
-
+eliza-config.ts
 
 import { seiPlugin } from "@elizaos/plugin-sei"
 
