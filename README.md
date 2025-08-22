@@ -13,6 +13,8 @@ Solution Statement Streamixy delivers a trustless, data-driven alternative. Our 
 
 https://github.com/Disruptor123/streamixy/blob/main/eliza-config.ts
 
+https://github.com/Disruptor123/streamixy/blob/main/StreamToken.json
+
 twitter 
 https://github.com/Disruptor123/streamixy/blob/main/app/api/auth/twitter/callback/route.ts
 
